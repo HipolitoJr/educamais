@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block 'header_body' %}
+
+    <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="#">ENEM</a></li>
+        <li class="breadcrumb-item">{{ titulo_pagina }}</li>
+    </ol>
+{% endblock %}
+
+{% block 'container_body' %}
+
+    <div class="row mb-4">
+        <div class="col-lg-6">
+            <div class="card ">
+                <div class="card-header">
+                    <h5 class="card-title text-muted mb-0">SUAS NOTAS vs SEU PERFIL</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="minhas-notas-radar" width="600" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card card-stats">
+                <div class="card-header">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Notas meu perfil</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="minhas-notas-bar" width="600" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+            <table class="table align-items-center" id="tabela-perfis">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Cor/Raça</th>
+                        <th>Escola</th>
+                        <th>Renda Familiar</th>
+                        <th>Linguagens</th>
+                        <th>Matemática</th>
+                        <th>Redação</th>
+                        <th>Ciências Humanas</th>
+                        <th>Ciências da Natureza</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for perfil in perfis %}
+                        <tr>
+                            <td>{{ perfil.get_cor_raca_display }}</td>
+                            <td>{{ perfil.get_tipo_escola_display }}</td>
+                            <td>{{ perfil.get_renda_familiar_display }}</td>
+                            <td>{{ perfil.areas.filter.1 }}</td>
+                            <td>{{ perfil.areas.filter.2 }}</td>
+                            <td>{{ perfil.areas.filter.0 }}</td>
+                            <td>{{ perfil.areas.filter.4 }}</td>
+                            <td>{{ perfil.areas.filter.3 }}</td>
+                        </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block 'js_code' %}
+    var ctxNotasRadar = document.getElementById('minhas-notas-radar');
+    var ctxNotasBar = document.getElementById('minhas-notas-bar');
+
+    options = {
+        scale: {
+            angleLines: {
+                display: false
+            },
+            ticks: {
+                suggestedMin: 0,
+                suggestedMax: 1000
+            }
+        }
+    };
+
+    optionsBar = {
+        "animation": animacao,
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true,
+                    suggestedMax: 1000
+                }
+            }]
+        }
+    };
+
+    data = {
+        labels: ['Linguagens', 'Matemática', 'Redação', 'Humanas', 'Natureza'],
+        datasets: [{
+            data: {{ user.perfil.notas }},
+            label: 'Minhas Notas',
+            backgroundColor: 'rgba(55, 89, 252, 0.6)',
+            borderColor: 'rgba(55, 89, 252, 0.8)',
+        },{
+            data: {{ meu_perfil.notas }},
+            label: 'Meu Perfil',
+            backgroundColor: 'rgba(255, 79, 82, 0.6 )',
+            borderColor: 'rgba(255, 79, 82, 0.8)',
+        }],
+        borderWidth: 0.5
+    };
+
+    var myRadarChart = new Chart(ctxNotasRadar, {
+        type: 'radar',
+        data: data,
+        options: options
+    });
+
+    var myBarChart = new Chart(ctxNotasBar, {
+        type: 'bar',
+        data: data,
+        options: optionsBar,
+    });
+
+{% endblock %}

@@ -1,0 +1,160 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> Educa+ </title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo_educacao.png' %}" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="{% static 'assets/js/plugins/nucleo/css/nucleo.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/css/argon-dashboard.css' %}" rel="stylesheet"/>
+    {{ busca_form.media.css }}
+</head>
+
+<style type="text/css">
+  .pulse {
+  display: block;
+  border-radius: 1%;
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(60,54,244, 1);
+  animation: pulse 1.5s infinite;
+}
+.pulse:hover {
+  animation: none;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(60,54,244, 1);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(60,54,244, 1);
+    box-shadow: 0 0 0 0 rgba(60,54,244, 1);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
+
+</style>
+
+<body class="bg-default">
+<div class="main-content">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
+        <div class="container px-4">
+            <a class="" href="{% url 'buscar' %}">
+                <img src="{% static '/img/logo_blue.png' %}" width="120"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-collapse-main">
+                <!-- Collapse header -->
+                <div class="navbar-collapse-header d-md-none">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+                            <a href="../index.html">
+                                <img src="../assets/img/brand/blue.png">
+                            </a>
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse"
+                                    data-target="#navbar-collapse-main" aria-controls="sidenav-main"
+                                    aria-expanded="false" aria-label="Toggle sidenav">
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {% if user.is_authenticated %}
+                    <ul class="navbar-nav ml-auto">
+                        {% include 'partials/menu_usuario.html' %}
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-icon" href="{% url 'registrar' %}">
+                                <i class="ni ni-circle-08"></i>
+                                <span class="nav-link-inner--text">Registre-se</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-icon" href="{% url 'login' %}">
+                                <i class="ni ni-key-25"></i>
+                                <span class="nav-link-inner--text">Entrar</span>
+                            </a>
+                        </li>
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link nav-link-icon" href="../examples/profile.html">-->
+                                <!--<i class="ni ni-single-02"></i>-->
+                                <!--<span class="nav-link-inner&#45;&#45;text">Meu Perfil</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    </ul>
+                {% endif %}
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+        <div class="header bg-gradient-info py-lg-9" style="padding-bottom: 20px;">
+        <div class="container">
+            <div class="header-body text-center mb-0">
+                {% block 'header_body' %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+        {% block 'container_body' %}
+        {% endblock %}
+    </div>
+
+    <div class="container-fluid mt-2">
+        {% include 'partials/footer.html' %}
+    </div>
+
+</div>
+
+    {{ busca_form.media.js }}
+
+    <script src="{% static 'assets/js/plugins/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/argon-dashboard.min.js' %}"></script>
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
+    <script>
+        window.TrackJS &&
+          TrackJS.install({
+            token: "ee6fab19c5a04ac1a32a645abde4613a",
+            application: "argon-dashboard-free"
+          });
+    </script>
+</body>
+</html>

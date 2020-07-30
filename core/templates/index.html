@@ -1,0 +1,81 @@
+{% extends 'base_registro.html' %}
+{% load staticfiles %}
+
+{% block 'header_body' %}
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6">
+            <h1 class="text-white">Bem vindo!</h1>
+            <p>
+            <h3 class="text-white">
+                Informe aqui os filtros para sua busca, e veja todas as informações para suas notas no ENEM.
+                <img src="{% static '/img/emoticon.png' %}" width="20">
+            </h3>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block 'container_body' %}
+    <form role="form" class="row justify-content-center" action="{% url 'dashboard' %}" method="get">
+        {{ busca_form.management_form  }}
+
+        <div class="col-lg-5 col-md-5">
+            <div class="card bg-secondary shadow border-0">
+                <div class="card-header bg-transparent">
+                    <div class="text-center mt-2">
+                        <small style="font-weight: bold;">Selecione um Curso:</small>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                            </div>
+                            <select class="form-control" name="curso" id="curso">
+                                    <option value="">Nome do Curso:</option>
+                                    {% for item in busca_form.curso.field.choices %}
+                                        <option value="{{ item.1 }}">{{ item.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 col-md-5">
+            <div class="card bg-secondary shadow border-0">
+                <div class="card-header bg-transparent">
+                    <div class="text-center bold mt-2">
+                        <small style="font-weight: bold;">Selecione uma Universidade:</small>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-building"></i></span>
+                            </div>
+                            <select class="form-control" name="universidade" id="universidade">
+                                <option value="">Universidade:</option>
+                                {% for item in busca_form.universidade.field.choices %}
+                                    <option value="{{ item.1 }}">{{ item.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 mt-5">
+                <span class="pulse">
+                    <input type="submit" class="btn btn-primary btn-lg btn-block text-white"/>
+                </span>
+        </div>
+    </form>
+{% endblock %}

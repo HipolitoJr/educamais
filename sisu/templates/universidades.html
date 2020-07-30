@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block 'header_body' %}
+
+    <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="#">SISU</a></li>
+        <li class="breadcrumb-item">{{ titulo_pagina }}</li>
+    </ol>
+
+{% endblock %}
+
+
+{% block 'container_body' %}
+    <div class="card">
+        <div class="card-header">
+            <h3>Universidades</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table " id="tabela-cursos" style="width: 100%">
+                    <thead class="thead-light">
+                    <tr>
+                        <th >Sigla</th>
+                        <th >Nome da IES</th>
+                        <th>Qtde. de cursos</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="list">
+                    {% for ies in universidades %}
+                    <tr>
+                        <td style="max-width:240px;" class="text-truncate">
+                            {{ ies.sigla }}
+                        </td>
+
+                        <th scope="row"  style="max-width:240px;" class="text-truncate">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <span class="name mb-0 text-sm">{{ ies.nome }}</span>
+                                </div>
+                            </div>
+                        </th>
+
+                        <td class="budget" align="center">
+                            {{ ies.qtde_cursos }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

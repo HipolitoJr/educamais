@@ -1,0 +1,71 @@
+{% load staticfiles %}
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md bg-secondary" id="sidenav-main">
+    <div class="scrollbar-inner">
+        <div class="container-fluid scrollnav">
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
+                    aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <p align="center" class="mb-0">
+                <a href="{% url 'buscar' %}">
+                    <img src="{% static '/img/logo_blue.png' %}" height="120" align="center"/>
+                </a>
+            </p>
+
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                <!-- Collapse header -->
+                <div class="navbar-collapse-header d-md-none">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+                            <a href="../index.html">
+                                <span style="font-family: cursive; font-size: 16pt;" class="text-blue">educa+</span>
+                            </a>
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse"
+                                    data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+                                    aria-expanded="true"
+                                    aria-label="Toggle sidenav">
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="navbar-heading text-muted">Registro de Buscas</h6>
+
+                <!-- Navigation -->
+                <ul class="navbar-nav">
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'buscas_realizadas' %}">
+                            <i class="ni ni-tv-2 text-info"></i>
+                            Dashboard Escolar
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="my-3"></div>
+                <h6 class="navbar-heading text-muted">Informações Alunos</h6>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'alunos_perfil' %}">
+                            <i class="ni ni-single-02 text-info"></i>
+                            Alunos por Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'notas_alunos' %}">
+                            <i class="ni ni-collection text-info"></i>
+                            Notas por Alunos
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,124 @@
+{% load staticfiles %}
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md bg-secondary" id="sidenav-main">
+    <div class="scrollbar-inner">
+        <div class="container-fluid scrollnav">
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
+                    aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <p align="center" class="mb-0">
+                <a href="{% url 'buscar' %}">
+                    <img src="{% static '/img/logo_blue.png' %}" height="120" align="center"/>
+                </a>
+            </p>
+
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                <!-- Collapse header -->
+                <div class="navbar-collapse-header d-md-none">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+                            <a href="../index.html">
+                                <span style="font-family: cursive; font-size: 16pt;" class="text-blue">educa+</span>
+                            </a>
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse"
+                                    data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+                                    aria-expanded="false"
+                                    aria-label="Toggle sidenav">
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="navbar-heading text-muted">Informações SISU</h6>
+
+                <!-- Navigation -->
+                <ul class="navbar-nav">
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'buscar' %}">
+                            <i class="ni ni-tv-2 text-info"></i>
+                            Fazer uma busca
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'cursos' %}">
+                            <i class="ni ni-hat-3 text-info"></i>
+                            Cursos
+                        </a>
+                    </li>
+
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'universidades' %}">
+                            <i class="ni ni-building text-info"></i>
+                            Universidades
+                        </a>
+                    </li>
+
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'comparar_cursos' %}">
+                            <i class="ni ni-chart-bar-32 text-info"></i>
+                            Comparar Cursos
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="my-3"></div>
+                <h6 class="navbar-heading text-muted">Informações ENEM</h6>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'notas_prova' %}">
+                            <i class="ni ni-badge text-danger"></i>
+                            Notas por Prova
+                        </a>
+                    </li>
+
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'notas_perfil' %}">
+                            <i class="ni ni-badge text-danger"></i>
+                            Notas por Perfil
+                        </a>
+                    </li>
+
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'comparar_perfis' %}">
+                            <i class="ni ni-chart-bar-32 text-danger"></i>
+                            Comparar Perfis
+                        </a>
+                    </li>
+                </ul>
+
+
+                <div class="my-3"></div>
+                <h6 class="navbar-heading text-muted">Configurações</h6>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'minhas_provas' %}">
+                            <i class="ni ni-collection text-default"></i>
+                            Minhas Provas
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item  class=" active=" ">
+                        <a class=" nav-link " href="{% url 'meu_perfil' %}">
+                            <i class="ni ni-single-02 text-default"></i>
+                            Perfil
+                        </a>
+                    </li>
+
+                    <br>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

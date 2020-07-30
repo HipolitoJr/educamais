@@ -1,0 +1,45 @@
+{% load staticfiles %}
+
+<li class="nav-item dropdown">
+    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+       aria-expanded="false">
+        <div class="media align-items-center">
+            <span class="avatar avatar-sm rounded-circle">
+              <img alt="Image placeholder" src="{% static 'img/user-icon.png' %}">
+            </span>
+            <div class="media-body ml-2 d-none d-lg-block">
+                <span class="mb-0 text-sm  font-weight-bold">
+                    {% if user.perfil %}
+                        {{ user.email }}
+                    {% elif user.escola %}
+                        {{ user.first_name}}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+        <a href="{% url 'meu_perfil' %}" class="dropdown-item">
+            <i class="ni ni-single-02"></i>
+            <span>Meu perfil</span>
+        </a>
+        <a href="" class="dropdown-item">
+            <i class="ni ni-settings-gear-65"></i>
+            <span>Configurações</span>
+        </a>
+        <a href="" class="dropdown-item">
+            <i class="ni ni-calendar-grid-58"></i>
+            <span>Atividade</span>
+        </a>
+        <a href="" class="dropdown-item">
+            <i class="ni ni-support-16"></i>
+            <span>Suporte</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="{% url 'logout' %}" class="dropdown-item">
+            <i class="ni ni-user-run"></i>
+            <span>Sair</span>
+        </a>
+    </div>
+</li>

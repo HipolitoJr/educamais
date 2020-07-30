@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load utils %}
+
+{% block 'header_body' %}
+
+    <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="#">SISU</a></li>
+        <li class="breadcrumb-item">{{ titulo_pagina }}</li>
+        <li class="breadcrumb-item active" aria-current="page">
+            {{ form.curso }}
+            {% if form.universidade and form.curso %}  -  {% endif %}
+            {{ form.universidade }}
+        </li>
+    </ol>
+
+{% endblock %}
+
+
+{% block 'container_body' %}
+
+    <div class="row mb-4">
+    <div class="col-lg-4">
+        <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body"  style="min-height: 150px">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Melhor Pontuação</h5>
+                        <span class="h1 font-weight-bold mb-0">{{ melhor_pontuacao }} pts</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+                            <i class="ni ni-chart-bar-32"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mt-3 mb-0 text-sm">
+                    {% sub melhor_pontuacao melhor_curso.modalidades.all.first.nota_corte as diferenca %}
+                    <span class="text-wrap">{{ melhor_curso.campus }}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body" style="min-height: 150px">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">
+                            Maior Nota de corte
+                        </h5>
+                        <span class="h1 font-weight-bold mb-0">{{ maior_nota }} pts</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+                            <i class="ni ni-chart-pie-35"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mt-3 mb-0 text-sm">
+                    <span class="text-wrap">{{ maior_nota.curso.campus }}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+        <div class="col-lg-4">
+        <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body"  style="min-height: 150px">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Qtde. Classificações</h5>
+                        <span class="h1 font-weight-bold mb-0">{{ qtde_classificacoes }}</span>
+                        <span class="text-nowrap">/ {{ cursos.count }}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+                            <i class="fa fa-percentage"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mt-3 mb-0 text-sm">
+                    <span class="text-nowrap">Você está acima de </span>
+                    <span class="text-nowrap">&nbsp</span>
+                    <span class="text-success"><i class="fa fa-arrow-up"></i> {{ percentual_acima }} %</span>
+                    <span class="text-nowrap">
+                        dos cursos encontrados
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <small class="text-muted">
+            Exibindo resultados para:
+            {{ form.curso }}
+
+            {% if form.universidade and form.curso %} / {% endif %}
+
+            {{ form.universidade }}
+        </small>
+    </div>
+
+    <div class="card-body">
+            <table class="table " id="tabela-cursos" style="width: 100%">
+                <thead class="thead-light">
+                    <tr>
+                        <th >Nome do curso</th>
+                        <th >Sigla da IES.</th>
+                        <th >Nota de corte</th>
+                        <th >Sua Nota</th>
+                        <th >Dist.</th>
+                    </tr>
+                </thead>
+
+                <tbody class="list">
+                {% for curso in cursos %}
+                    {% nota_corte_curso curso user.perfil as minha_nota %}
+                    <tr>
+                        <th scope="row"  style="max-width:240px;" class="text-truncate">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <span class="name mb-0 text-sm">{{ curso.nome }}</span>
+                                </div>
+                            </div>
+                        </th>
+
+                        <td style="max-width:240px;" class="text-truncate">
+                            {{ curso.campus }}
+                        </td>
+
+                        <td class="budget">
+                            <div class="align-items-center">
+                                <span class="name mb-0 text-sm" data-toggle="tooltip" data-placement="top" title="{{ curso.modalidades.all.first.tipo }}">
+                                    <b>{{ curso.modalidades.all.first }}</b>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="budget">
+                            <div class="align-items-center">
+                                <span class="name mb-0 text-sm">
+                                    <b>{{ minha_nota }}</b>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="budget">
+                            <div class="align-items-center">
+                                <span class="name mb-0 text-sm">
+                                    {% sub minha_nota curso.modalidades.all.first.nota_corte as diferenca %}
+
+                                    {% if diferenca > 0 %}
+                                        <span class="text-success mr-2">
+                                            <i class="fa fa-arrow-up"></i>
+                                            {{ diferenca|floatformat:2 }}
+                                        </span>
+                                    {% elif diferenca < 0 %}
+                                        <span class="text-danger mr-2">
+                                            <i class="fa fa-arrow-down"></i>
+                                            {{ diferenca|floatformat:2 }}
+                                        </span>
+                                    {% else %}
+                                        <span class="text-primary mr-2">
+                                            <i class="fa fa-minus"></i>
+                                            {{ diferenca|floatformat:2 }}
+                                        </span>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+    </div>
+
+</div>
+{% endblock %}
+

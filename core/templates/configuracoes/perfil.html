@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block 'header_body' %}
+    <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="#">Configurações</a></li>
+        <li class="breadcrumb-item">{{ titulo_pagina }}</li>
+    </ol>
+{% endblock %}
+
+{% block 'container_body' %}
+
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card bg-secondary shadow" style="font-size: 11pt">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="mb-0">Minha conta</h3>
+                    </div>
+                    <div class="col-6" align="right">
+                        <button class="btn btn-primary btn-sm">
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h6 class="heading-small text-muted mb-4">Minhas notas</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover table-striped ">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Linguagens, códigos e suas Tecnologias">Linguagens</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Matemática e suas Tecnologias">Matematica</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Redação">Redação</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Ciências da Natureza e suas Tecnologias">Natureza</th>
+                            <th data-toggle="tooltip" data-placement="top" title="Ciências Humanas e suas Tecnologias">Humanas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for prova in user.perfil.provas.all %}
+                            <tr class="{{ prova.ativo|yesno:'table-success,table' }}">
+                                <td>
+                                    <input class="" id="customCheck3" name="prova" type="radio" {{prova.ativo|yesno:'checked,'}}>
+                                </td>
+                                <td>{{ prova.nota_linguagens }}</td>
+                                <td>{{ prova.nota_matematica }}</td>
+                                <td>{{ prova.nota_redacao }}</td>
+                                <td>{{ prova.nota_natureza }}</td>
+                                <td>{{ prova.nota_humanas }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr>
+                <h6 class="heading-small text-muted mb-4 mt-3">Informações do usuário</h6>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form method="post" id="login-form" action="{% url 'login' %}">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="email">Email</label>
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                            </div>
+                                            <input class="form-control" name="email" id="email" required="required" value="{{ user.username }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="nome">Nome completo</label>
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                            </div>
+                                            <input class="form-control" name="nome" id="nome" required="required" value="{{ user.first_name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="cor_raca">Cor/Raça</label>
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-badge"></i></span>
+                                            </div>
+                                            <input class="form-control" name="cor_raca" id="cor_raca" required="required" value="{{ user.perfil.tipo_perfil.get_cor_raca_display }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="renda_familiar">Renda familiar</label>
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-tag"></i></span>
+                                            </div>
+                                            <input class="form-control" name="renda_familiar" id="renda_familiar" required="required" value="{{ user.perfil.tipo_perfil.get_renda_familiar_display }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="tipo_escola">Tipo de Escola</label>
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-building"></i></span>
+                                            </div>
+                                            <input class="form-control" name="tipo_escola" id="tipo_escola" required="required" value="{{ user.perfil.tipo_perfil.get_tipo_escola_display }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="card mb-4" style="font-size: 11pt">
+            <p align="center">
+                <img src="{% static 'img/user-icon.png' %}" class="rounded-circle" height="200" width="200" align="center">
+            </p>
+
+            <div class="card-body">
+                <h4 align="center">{{ user.username }}</h4>
+
+                <p class="mt-2 mb-4" align="center">
+                    {{ user.first_name }}
+                </p>
+
+                <h5 align="center" class="mt-4">
+                    {{ user.perfil.escola }}
+                </h5>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

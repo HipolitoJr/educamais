@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+
+{% block 'container_body' %}
+    <div class="row mb-4">
+        <div class="col-lg-4">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body"  style="min-height: 110px">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Tipo de Escola</h5> <br>
+                            <span class="h3 font-weight-bold mb-0">{{ user.perfil.tipo_perfil.get_tipo_escola_display }}</span>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+                                <i class="ni ni-building"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body"  style="min-height: 110px">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Renda Familiar</h5>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+                                <i class="ni ni-tag"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="h3 font-weight-bold mb-0">{{ user.perfil.tipo_perfil.get_renda_familiar_display }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body"  style="min-height: 110px">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Cor/Raça</h5>
+                            <br>
+                            <span class="h3 font-weight-bold mb-0">{{ user.perfil.tipo_perfil.get_cor_raca_display }}</span>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-red text-white rounded-circle shadow">
+                                <i class="ni ni-badge"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-muted mb-0">NOTAS - REDAÇÃO </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="faixas-notas-redacao-bar" width="280" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-muted mb-0">NOTAS - LINGUAGENS </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="faixas-notas-lc-bar" width="280" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-muted mb-0">NOTAS - MATEMÁTICA </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="faixas-notas-mt-bar" width="280" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-muted mb-0">NOTAS - NATUREZA </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="faixas-notas-cn-bar" width="280" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-muted mb-0">NOTAS - HUMANAS </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="faixas-notas-ch-bar" width="280" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block 'js_code' %}
+    var ctxFaixasBarRedacao = document.getElementById('faixas-notas-redacao-bar');
+    var ctxFaixasBarLC = document.getElementById('faixas-notas-lc-bar');
+    var ctxFaixasBarMT = document.getElementById('faixas-notas-mt-bar');
+    var ctxFaixasBarCN = document.getElementById('faixas-notas-cn-bar');
+    var ctxFaixasBarCH = document.getElementById('faixas-notas-ch-bar');
+    faixas = ['até 300', '301 a 400', '401 a 500', '501 a 600', '601 a 700', '701 a 800', '801 a 900', 'Acima de 900']
+
+    data_rd = {
+        labels: faixas,
+        datasets: [{
+            data: {{ percentis.redacao }},
+            label: 'Perc. Alunos',
+            backgroundColor: 'rgba(55, 89, 252, 0.6)',
+            borderColor: 'rgba(55, 89, 252, 0.8)',
+        }]
+    };
+
+    data_lc = {
+        labels: faixas,
+        datasets: [{
+            data: {{ percentis.lc }},
+            label: 'Perc. Alunos',
+            backgroundColor: 'rgba(55, 89, 252, 0.6)',
+            borderColor: 'rgba(55, 89, 252, 0.8)',
+        }]
+    };
+
+    data_mt = {
+        labels: faixas,
+        datasets: [{
+            data: {{ percentis.mt }},
+            label: 'Perc. Alunos',
+            backgroundColor: 'rgba(55, 89, 252, 0.6)',
+            borderColor: 'rgba(55, 89, 252, 0.8)',
+        }]
+    };
+
+    data_ch = {
+        labels: faixas,
+        datasets: [{
+            data: {{ percentis.ch }},
+            label: 'Perc. Alunos',
+            backgroundColor: 'rgba(55, 89, 252, 0.6)',
+            borderColor: 'rgba(55, 89, 252, 0.8)',
+        }]
+    };
+
+    data_cn = {
+        labels: faixas,
+        datasets: [{
+            data: {{ percentis.cn }},
+            label: 'Perc. Alunos',
+            backgroundColor: 'rgba(55, 89, 252, 0.6)',
+            borderColor: 'rgba(55, 89, 252, 0.8)',
+        }]
+    };
+
+    var myBarChart = new Chart(ctxFaixasBarRedacao, {
+        type: 'bar',
+        data: data_rd,
+        options: {
+            "animation": animacao_perc,
+            legend: {
+                display: true,
+                position: 'bottom'
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        display: true,
+                        drawOnChartArea: false,
+                    }
+                }],
+            }
+        }
+    });
+
+    var myBarChart = new Chart(ctxFaixasBarLC, {
+        type: 'bar',
+        data: data_lc,
+        options: {
+            "animation": animacao_perc,
+            legend: {
+                display: true,
+                position: 'bottom'
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        display: true,
+                        drawOnChartArea: false,
+                    }
+                }],
+            }
+        }
+    });
+
+    var myBarChart = new Chart(ctxFaixasBarMT, {
+        type: 'bar',
+        data: data_mt,
+        options: {
+            "animation": animacao_perc,
+            legend: {
+                display: true,
+                position: 'bottom'
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        display: true,
+                        drawOnChartArea: false,
+                    }
+                }],
+            }
+        }
+    });
+
+    var myBarChart = new Chart(ctxFaixasBarCN, {
+        type: 'bar',
+        data: data_cn,
+        options: {
+            "animation": animacao_perc,
+            legend: {
+                display: true,
+                position: 'bottom'
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        display: true,
+                        drawOnChartArea: false,
+                    }
+                }],
+            }
+        }
+    });
+
+    var myBarChart = new Chart(ctxFaixasBarCH, {
+        type: 'bar',
+        data: data_ch,
+        options: {
+            "animation": animacao_perc,
+            legend: {
+                display: true,
+                position: 'bottom'
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        display: true,
+                        drawOnChartArea: false,
+                    }
+                }],
+            }
+        }
+    });
+
+{% endblock %}
