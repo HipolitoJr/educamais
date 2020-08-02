@@ -1,10 +1,10 @@
 import csv
 import os
-path =  "C:\\Users\\Hipolito\\Google Drive\\ADS_IFPI\\2019-1\\TRABALHO DE CONCLUSÃO DE CURSO 1\\DADOS\\"
+path =  "/home/hipolito/Documentos/dados2/"
 os.chdir(path)
 from sisu.models import *
 
-with open('Sisu 2017_1 Pesos notas de corte.csv') as csvfile:
+with open('Sisu 2017_1 Pesos notas de corte.csv', encoding='ISO-8859-1') as csvfile:
     reader = csv.DictReader(csvfile, delimiter=';')
     for row in reader:
         try:

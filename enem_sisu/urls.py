@@ -26,7 +26,7 @@ urlpatterns = [
     path('sisu/', include('sisu.urls')),
     path('enem/', include('enem.urls')),
     path('admin/', admin.site.urls),
-    path('select2/',  include('django_select2.urls')),
+    # path('select2/',  include('django_select2.urls')),
 
     # path('', core_views.index, name='index'),
     # path('cursos/', core_views.cursos, name='cursos'),
